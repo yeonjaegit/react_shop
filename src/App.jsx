@@ -33,7 +33,6 @@ const Div = styled.div`
 
 function App() {
   const [fruit, setFruit] = useState([]);
-
   useEffect(() => {
     axios.get('https://raw.githubusercontent.com/ghkdss/react_sample_data/main/fruit.json')
   .then(response => {
@@ -42,7 +41,7 @@ function App() {
   .catch(error => {
     console.log(error);
   })
-  })
+  },[])
 
   return (
     <div className={style.container}>

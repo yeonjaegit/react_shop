@@ -8,7 +8,7 @@ function Cart() {
   const item = useSelector(state => state.item);
 
   // console.log(test);
-  // console.log(item);
+  console.log(item);
 
   return (
     <Table>
