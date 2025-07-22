@@ -9,6 +9,7 @@ import About from './pages/About'
 import styled from 'styled-components'
 import axios from 'axios'
 import Cart from './pages/Cart'
+import WatchedProduct from './components/WatchedProduct'
 
 // styled.component 기본 사용법
 // const 컴포넌트이름지정 = styled.태그명`
@@ -43,10 +44,15 @@ function App() {
   })
   },[])
 
+  useEffect(() => {
+    localStorage.setItem('watched', JSON.stringify([]))
+
+  }, [])
+
   return (
     <div className={style.container}>
       <Header />
-
+      <WatchedProduct fruit={fruit}/>
       <Routes>
         <Route path='/' element={<MainPage fruit={fruit}/>}/>
         <Route path='/detail/:id' element={<Detail fruit={fruit}/>} />

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import TabContent from "../components/TabContent";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/cartSlice";
+import { setWatched } from "../redux/watchedSlice";
 
 function Detail({fruit}) {
   const { id } = useParams();
@@ -38,6 +39,32 @@ function Detail({fruit}) {
   // 의존성 배열이 빈 배열이면 마운트 시 한 번만 실행됌
   // 의존성 배열에 특정 state, props가 있으면
   // 마운트될 때와 해당 state, props가 업데이트될 때 실행됌
+
+  useEffect(() => {
+    // 방금 본 상품의 id를 로컬스토리지에 추가할 예정
+    let watched = localStorage.getItem('watched')
+    watched = JSON.parse(watched);
+
+    // includes : 해당 배열에 값이 있으면 true, 없으면 false
+
+    // 이미 최근 본 상품이 3개일 때 새로운 걸 추가해야 하므로 기존거 하나 지우고 추가
+    // 이미 들어있는거면 안지워도 됌
+    if(watched.length === 3 && !watched.includes(id)) {
+      watched.pop();
+    }
+      watched = [id, ...watched];
+
+      watched = new Set(watched);
+    
+
+    // set은 배열이 아니기 때문에 중복 제거 후 다시 배열로 변환해야 함
+    watched = Array.from(watched);
+
+    localStorage.setItem('watched', JSON.stringify(watched));
+    dispatch(setWatched(watched))
+    
+  }, [])
+
   useEffect(() => {
     console.log('useEffect 확인용 콘솔')
   }, [num])
