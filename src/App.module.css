@@ -7,3 +7,7 @@
 .App.b {
   border: 1px solid red;
 }
+
+.container {
+  border: 1px solid blue;
+}
